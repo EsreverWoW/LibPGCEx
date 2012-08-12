@@ -1,0 +1,6 @@
+package-as: LibPGCEx
+manual-changelog: ChangeLog.txt
+enable-nolib-creation: no
+externals:
+    LibPGC:
+        url: svn://svn.curseforge.net/rift/libpgc/mainline/trunk

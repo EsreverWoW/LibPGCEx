@@ -51,35 +51,3 @@ local function SampleFunction(auctions, startTime, extra)
 end
 
 PublicInterface.RegisterPriceSampler(ID, NAME, SampleFunction, extraDescription)
-
---[[
-local function FrameConstructor(name, parent)
-	local configFrame = UICreateFrame("Frame", name, parent)
-	
-	local daysText = UICreateFrame("Text", configFrame:GetName() .. ".DaysText", configFrame)
-	local daysSlider = UICreateFrame("BSlider", configFrame:GetName() .. ".DaysSlider", configFrame)
-
-	daysText:SetPoint("CENTERLEFT", configFrame, 0, 1/2, 10, 0)
-	daysText:SetFontSize(14)
-	daysText:SetText(L["Samplers/TimeDays"])
-	
-	daysSlider:SetPoint("CENTERLEFT", configFrame, 0, 1/2, daysText:GetWidth() + 20, 0)
-	daysSlider:SetPoint("CENTERRIGHT", configFrame, 1, 1/2, -10, 0)
-	daysSlider:SetRange(1, MAX_DAYS)
-	daysSlider:AddPreValue("0", 0, L["Samplers/TimeActive"])
-	daysSlider:SetPosition(DEFAULT_DAYS)
-
-	local function GetExtra()
-		return
-		{
-			days = daysSlider:GetPosition(),
-		}
-	end
-	
-	local function SetExtra(extra)
-		daysSlider:SetPosition(extra and extra.days or DEFAULT_DAYS)
-	end
-	
-	return configFrame, PREFERRED_FRAME_HEIGHT, GetExtra, SetExtra
-end
-]]

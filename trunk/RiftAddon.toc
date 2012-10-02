@@ -11,24 +11,22 @@ Description =
 	English = "LibPGCEx allows to register modules that extend LibPGC functionality.",
 }
 Author = "Baanano"
-Version = "0.4.4"
+Version = "0.4.4 v2"
 Email = "baanano.rift@gmail.com"
 Website = "http://www.bananah.net/"
-Environment = "1.9"
+Environment = "1.10"
 Embed =
 {
 	LibPGC = true,
+	LibScheduler = true,
 }
 Dependencies =
 {
-	LibPGC = {"required", "before"},
-}
-SavedVariables =
-{
+	LibPGC = { "required", "before" },
+	LibScheduler = { "required", "before" },
 }
 RunOnStartup =
 {
-	"Scheduler.lua",
 	"ModuleAuctionSearchers.lua",
 	"ModulePriceFallbacks.lua",
 	"ModulePriceSamplers.lua",

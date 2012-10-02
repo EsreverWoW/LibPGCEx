@@ -12,10 +12,10 @@ _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
 local CAScan = Command.Auction.Scan
-local CYield = coroutine.yield
 local GetAuctionData = LibPGC.GetAuctionData
 local IInteraction = Inspect.Interaction
-local QueueTask = InternalInterface.Scheduler.QueueTask
+local CreateTask = LibScheduler.CreateTask
+local Release = LibScheduler.Release
 local SearchAuctions = LibPGC.SearchAuctions
 local TInsert = table.insert
 local UECreate = Utility.Event.Create
@@ -112,7 +112,7 @@ function PublicInterface.SearchAuctions(callback, id, online, text, extra)
 					for _, auctionID in pairs(auctionIDs) do
 						auctions[auctionID] = GetAuctionData(nil, auctionID)
 					end
-					QueueTask(function() local found = searchFunction(auctions, extra) CYield(true) return found end, function(auctions) callback(auctions, online) end)
+					CreateTask(function() local found = searchFunction(auctions, extra) Release() return found end, function(auctions) callback(auctions, online) end)
 					
 					nextSearch = nil
 				end
@@ -120,7 +120,7 @@ function PublicInterface.SearchAuctions(callback, id, online, text, extra)
 			return false
 		end
 	else
-		SearchAuctions(function(auctions) QueueTask(function() local found = searchFunction(auctions, extra) CYield(true) return found end, function(auctions) callback(auctions, false) end) end, role, rarity, levelMin, levelMax, category, priceMin, priceMax, text)
+		SearchAuctions(function(auctions) CreateTask(function() local found = searchFunction(auctions, extra) Release() return found end, function(auctions) callback(auctions, false) end) end, role, rarity, levelMin, levelMax, category, priceMin, priceMax, text)
 	end
 	
 	return true

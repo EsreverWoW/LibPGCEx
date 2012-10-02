@@ -11,9 +11,9 @@ local addonID = addonInfo.identifier
 _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
-local CYield = coroutine.yield
 local IIDetail = Inspect.Item.Detail
 local L = InternalInterface.Localization.L
+local Release = LibScheduler.Release
 local Time = Inspect.Time.Server
 local pairs = pairs
 local pcall = pcall
@@ -125,7 +125,7 @@ local function SearchFunction(nativeAuctions, extra)
 		if not preserve then
 			nativeAuctions[auctionID] = nil
 		end
-		CYield()
+		Release()
 	end
 	return nativeAuctions
 end

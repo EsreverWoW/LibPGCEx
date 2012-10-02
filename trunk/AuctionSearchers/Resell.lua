@@ -11,7 +11,7 @@ local addonID = addonInfo.identifier
 _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
-local CYield = coroutine.yield
+local GetLastTask = LibPGC.GetLastTask
 local GetPrices = PublicInterface.GetPrices
 local IIDetail = Inspect.Item.Detail
 local L = InternalInterface.Localization.L
@@ -19,6 +19,7 @@ local MFloor = math.floor
 local MHuge = math.huge
 local TInsert = table.insert
 local Time = Inspect.Time.Server
+local WaitOn = LibScheduler.WaitOn
 local ipairs = ipairs
 local pairs = pairs
 local pcall = pcall
@@ -169,7 +170,7 @@ local function SearchFunction(nativeAuctions, extra)
 	end
 	AssignScore()
 	
-	while remainingItemTypes > 0 do CYield(true) end
+	WaitOn(GetLastTask())
 	
 	return nativeAuctions
 end

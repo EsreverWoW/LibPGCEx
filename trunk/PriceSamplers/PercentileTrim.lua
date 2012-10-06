@@ -63,7 +63,6 @@ local function SampleFunction(auctions, startTime, extra)
 	local priceOrder = {}
 		
 	for auctionID, auctionData in pairs(auctions) do
-		local buy = auctionData.buyoutUnitPrice
 		local weight = weighted and auctionData.stack or 1
 		
 		for i = 1, weight do
@@ -71,7 +70,7 @@ local function SampleFunction(auctions, startTime, extra)
 		end
 	end
 	
-	TSort(priceOrder, function(a, b) return auctions[b].buyoutUnitPrice < auctions[b].buyoutUnitPrice end)
+	TSort(priceOrder, function(a, b) return auctions[a].buyoutUnitPrice < auctions[b].buyoutUnitPrice end)
 	
 	local firstIndex, lastIndex = MFloor(lowTrim * #priceOrder / 100) + 1, MCeil(highTrim * #priceOrder / 100)
 	

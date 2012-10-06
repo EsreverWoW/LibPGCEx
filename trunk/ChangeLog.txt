@@ -1,3 +1,7 @@
+	r5
+- Fixed bug in RelativePosition PriceStat
+- Fixed bug in PercentileTrim PriceSampler	
+
 	r4
 - Started using LibScheduler	
 

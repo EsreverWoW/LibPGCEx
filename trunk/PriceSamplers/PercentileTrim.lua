@@ -49,7 +49,13 @@ local extraDescription =
 		maxValue = 100,
 		defaultValue = DEFAULT_HIGH_TRIM,
 	},
-	extraOrder = { "weighted", "lowTrim", "highTrim", }
+	Layout =
+	{
+		{ "weighted" }, 
+		{ "lowTrim" }, 
+		{ "highTrim" },
+		columns = 1
+	}
 }
 
 local function SampleFunction(auctions, startTime, extra)

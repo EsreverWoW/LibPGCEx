@@ -44,7 +44,12 @@ local extraDescription =
 		maxValue = MAX_MULTIPLIER,
 		defaultValue = DEFAULT_BUY_MULTIPLIER,
 	},
-	extraOrder = { "bidMultiplier", "buyMultiplier", }
+	Layout = 
+	{
+		{ "bidMultiplier" },
+		{ "buyMultiplier" },
+		columns = 1,
+	}
 }
 
 local function PriceFunction(item, extra)

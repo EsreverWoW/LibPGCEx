@@ -32,7 +32,11 @@ local extraDescription =
 		value = "money",
 		defaultValue = DEFAULT_MIN_PROFIT,
 	},
-	extraOrder = { "minProfit", }
+	Layout =
+	{
+		{ "minProfit", },
+		columns = 1
+	},
 }
 
 local function MatchFunction(item, originalBid, originalBuy, adjustedBid, adjustedBuy, auctions, extra)

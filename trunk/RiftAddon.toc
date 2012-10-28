@@ -11,10 +11,10 @@ Description =
 	English = "LibPGCEx allows to register modules that extend LibPGC functionality.",
 }
 Author = "Baanano"
-Version = "0.4.4 v3"
+Version = "0.4.4 v4"
 Email = "baanano.rift@gmail.com"
 Website = "http://www.bananah.net/"
-Environment = "1.10"
+Environment = "1.11"
 Embed =
 {
 	LibPGC = true,
@@ -31,6 +31,7 @@ RunOnStartup =
 	"ModulePriceFallbacks.lua",
 	"ModulePriceSamplers.lua",
 	"ModulePriceStats.lua",
+	"ModulePriceComplex.lua",
 	"ModulePriceMatchers.lua",
 	"ModulePriceModels.lua",
 	"Localization.lua",
@@ -43,6 +44,7 @@ RunOnStartup =
 	"AuctionSearchers/Extended.lua",
 	"AuctionSearchers/Vendor.lua",
 	"AuctionSearchers/Resell.lua",
+	"PriceFallbacks/Fixed.lua",
 	"PriceFallbacks/Vendor.lua",
 	"PriceSamplers/Time.lua",
 	"PriceSamplers/StandardDeviation.lua",

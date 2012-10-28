@@ -208,8 +208,9 @@ function PublicInterface.GetPrices(callback, item, bidPercentage, models, dontMa
 		-- 9. Get complex prices
 		for modelID in pairs(complexModels) do
 			local usage = priceModels[modelID].usage
-			if type(usage) == "function" then
-				local bid, buy = usage(item, auctions, startTime)
+			local complexFunction = PublicInterface.GetPriceComplexFunction(usage)
+			if type(complexFunction) == "function" then
+				local bid, buy = complexFunction(item, auctions, startTime)
 				if buy then
 					prices[modelID] = { bid = bid, buy = buy, }
 				elseif bid then

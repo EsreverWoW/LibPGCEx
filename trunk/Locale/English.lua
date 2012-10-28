@@ -48,6 +48,10 @@ InternalInterface.Localization.RegisterLocale("English",--@do-not-package@
 	["Fallbacks/VendorBidMultiplier"] = "Bid multiplier",
 	["Fallbacks/VendorBuyMultiplier"] = "Buyout multiplier",
 	
+	["Fallbacks/FixedName"] = "Fixed",
+	["Fallbacks/FixedBidPrice"] = "Bid price",
+	["Fallbacks/FixedBuyPrice"] = "Buyout price",
+	
 	-- Samplers
 	["Samplers/TimeName"] = "Time",
 	["Samplers/TimeDays"] = "Number of days",

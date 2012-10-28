@@ -31,7 +31,11 @@ local extraDescription =
 		maxValue = MAX_DAYS,
 		defaultValue = DEFAULT_DAYS,
 	},
-	extraOrder = { "days", }
+	Layout =
+	{
+		{ "days" },
+		columns = 1,
+	}
 }
 
 local function SampleFunction(auctions, startTime, extra)

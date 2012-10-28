@@ -40,7 +40,12 @@ local extraDescription =
 		maxValue = 100,
 		defaultValue = DEFAULT_POSITION,	
 	},
-	extraOrder = { "weighted", "position", }
+	Layout =
+	{
+		{ "weighted" },
+		{ "position" },
+		columns = 1
+	}
 }
 
 local function StatFunction(auctions, extra)

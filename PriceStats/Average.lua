@@ -28,7 +28,11 @@ local extraDescription =
 		value = "boolean",
 		defaultValue = DEFAULT_WEIGHTED,
 	},
-	extraOrder = { "weighted", }
+	Layout =
+	{
+		{ "weighted" },
+		columns = 1
+	}
 }
 
 local function StatFunction(auctions, extra)

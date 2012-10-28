@@ -46,7 +46,13 @@ local extraDescription =
 		maxValue = MAX_DEVIATION,
 		defaultValue = DEFAULT_HIGH_DEVIATION,
 	},
-	extraOrder = { "weighted", "lowDeviation", "highDeviation", }
+	Layout =
+	{
+		{ "weighted" },
+		{ "lowDeviation" },
+		{ "highDeviation" },
+		columns = 1
+	}
 }
 
 local function SampleFunction(auctions, startTime, extra)

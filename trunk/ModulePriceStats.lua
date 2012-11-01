@@ -11,6 +11,7 @@ local addonID = addonInfo.identifier
 _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
+local CopyTableRecursive = InternalInterface.Utility.CopyTableRecursive
 local UECreate = Utility.Event.Create
 local pairs = pairs
 
@@ -57,6 +58,5 @@ function PublicInterface.GetPriceStatFunction(id)
 end
 
 function PublicInterface.GetPriceStatExtraDescription(id)
-	-- TODO Return copy
-	return priceStats[id] and priceStats[id].extraDescription or nil
+	return priceStats[id] and CopyTableRecursive(priceStats[id].extraDescription) or nil
 end

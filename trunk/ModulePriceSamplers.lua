@@ -11,6 +11,7 @@ local addonID = addonInfo.identifier
 _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
+local CopyTableRecursive = InternalInterface.Utility.CopyTableRecursive
 local UECreate = Utility.Event.Create
 local pairs = pairs
 
@@ -57,6 +58,5 @@ function PublicInterface.GetPriceSamplerFunction(id)
 end
 
 function PublicInterface.GetPriceSamplerExtraDescription(id)
-	-- TODO Return copy
-	return priceSamplers[id] and priceSamplers[id].extraDescription or nil
+	return priceSamplers[id] and CopyTableRecursive(priceSamplers[id].extraDescription) or nil
 end

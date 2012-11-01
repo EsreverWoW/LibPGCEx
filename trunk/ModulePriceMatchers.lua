@@ -11,6 +11,7 @@ local addonID = addonInfo.identifier
 _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
+local CopyTableRecursive = InternalInterface.Utility.CopyTableRecursive
 local UECreate = Utility.Event.Create
 local pairs = pairs
 
@@ -57,6 +58,5 @@ function PublicInterface.GetPriceMatcherFunction(id)
 end
 
 function PublicInterface.GetPriceMatcherExtraDescription(id)
-	-- TODO Return copy
-	return priceMatchers[id] and priceMatchers[id].extraDescription or nil
+	return priceMatchers[id] and CopyTableRecursive(priceMatchers[id].extraDescription) or nil
 end

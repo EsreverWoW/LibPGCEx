@@ -11,6 +11,7 @@ local addonID = addonInfo.identifier
 _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
+local CopyTableRecursive = InternalInterface.Utility.CopyTableRecursive
 local UECreate = Utility.Event.Create
 local pairs = pairs
 
@@ -57,6 +58,5 @@ function PublicInterface.GetPriceFallbackFunction(id)
 end
 
 function PublicInterface.GetPriceFallbackExtraDescription(id)
-	-- TODO Return copy
-	return priceFallbacks[id] and priceFallbacks[id].extraDescription or nil
+	return priceFallbacks[id] and CopyTableRecursive(priceFallbacks[id].extraDescription) or nil
 end

@@ -12,6 +12,7 @@ _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
 local CAScan = Command.Auction.Scan
+local CopyTableRecursive = InternalInterface.Utility.CopyTableRecursive
 local GetAuctionData = LibPGC.GetAuctionData
 local IInteraction = Inspect.Interaction
 local CreateTask = LibScheduler.CreateTask
@@ -68,8 +69,7 @@ function PublicInterface.GetAuctionSearcherFunction(id)
 end
 
 function PublicInterface.GetAuctionSearcherExtraDescription(id)
-	-- TODO Return copy
-	return auctionSearchers[id] and auctionSearchers[id].extraDescription or nil
+	return auctionSearchers[id] and CopyTableRecursive(auctionSearchers[id].extraDescription) or nil
 end
 
 function PublicInterface.SearchAuctions(callback, id, online, text, extra)

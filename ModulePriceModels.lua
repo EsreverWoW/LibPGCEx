@@ -11,6 +11,7 @@ local addonID = addonInfo.identifier
 _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
+local CopyTableRecursive = InternalInterface.Utility.CopyTableRecursive
 local MFloor = math.floor
 local MMax = math.max
 local MMin = math.min
@@ -67,13 +68,11 @@ function PublicInterface.GetPriceModelType(id)
 end
 
 function PublicInterface.GetPriceModelUsage(id)
-	-- TODO Return copy
-	return priceModels[id] and priceModels[id].usage or nil
+	return priceModels[id] and CopyTableRecursive(priceModels[id].usage) or nil
 end
 
 function PublicInterface.GetPriceModelMatchers(id)
-	-- TODO Return copy
-	return priceModels[id] and priceModels[id].matchers or nil
+	return priceModels[id] and CopyTableRecursive(priceModels[id].matchers) or nil
 end
 
 function PublicInterface.GetPrices(callback, item, bidPercentage, models, dontMatch)

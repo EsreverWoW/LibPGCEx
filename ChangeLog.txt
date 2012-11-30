@@ -1,3 +1,7 @@
+	Beta 0.4.4 RC3
+- Updated to RIFT 2.0
+- Raised level cap of Basic & Extended searchers to 60
+
 	Beta 0.4.4 RC1
 - Tagged as Beta
 

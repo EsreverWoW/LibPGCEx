@@ -11,10 +11,10 @@ Description =
 	English = "LibPGCEx allows to register modules that extend LibPGC functionality.",
 }
 Author = "Baanano"
-Version = "0.4.4 RC1"
+Version = "0.4.4 RC3"
 Email = "baanano.rift@gmail.com"
 Website = "http://www.bananah.net/"
-Environment = "1.11"
+Environment = "2.0"
 Embed =
 {
 	LibPGC = true,

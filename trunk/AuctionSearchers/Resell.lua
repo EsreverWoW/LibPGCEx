@@ -32,6 +32,7 @@ local DEFAULT_USE_BUY = true
 local DEFAULT_USE_BID = true
 local DEFAULT_MIN_DISCOUNT = 25
 local DEFAULT_MIN_PROFIT = 1
+local DEFAULT_CATEGORY = ""
 
 local extraDescription =
 {
@@ -74,7 +75,13 @@ local extraDescription =
 		name = L["Searchers/ResellMinProfit"],
 		value = "money",
 		defaultValue = DEFAULT_MIN_PROFIT,
-	},	
+	},
+	category =
+	{
+		name = L["Searchers/ResellCategory"],
+		value = "category",
+		defaultValue = DEFAULT_CATEGORY,
+	},
 	NativeFixed =
 	{
 		role = nil,
@@ -91,14 +98,14 @@ local extraDescription =
 		rarity = nil,
 		levelMin = nil,
 		levelMax = nil,
-		category = nil,
+		category = "category",
 		priceMin = nil,
 		priceMax = nil,
 	},
 	Layout =
 	{ 
-		{ "useBuy", "pricingModel", nil, "minDiscount", nil, },
-		{ "useBid", "bidDuration", nil, "minProfit", nil, },
+		{ "useBuy", "pricingModel", nil, "category", nil, },
+		{ "useBid", "bidDuration", "minDiscount", "minProfit", nil, },
 		columns = 5,		
 	},
 	ExtraInfo =

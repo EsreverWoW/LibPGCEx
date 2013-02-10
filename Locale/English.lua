@@ -40,6 +40,7 @@ InternalInterface.Localization.RegisterLocale("English",--@do-not-package@
 	["Searchers/ResellModel"] = "Reference price",
 	["Searchers/ResellMinDiscount"] = "Min. discount",
 	["Searchers/ResellMinProfit"] = "Min. profit",
+	["Searchers/ResellCategory"] = "Category",
 	["Searchers/ResellBidProfit"] = "Bid profit",
 	["Searchers/ResellBuyProfit"] = "Buyout profit",
 
@@ -55,6 +56,7 @@ InternalInterface.Localization.RegisterLocale("English",--@do-not-package@
 	-- Samplers
 	["Samplers/TimeName"] = "Time",
 	["Samplers/TimeDays"] = "Number of days",
+	["Samplers/TimeMinSample"] = "Min. sample size",
 	
 	["Samplers/StdevName"] = "Standard Deviation",
 	["Samplers/StdevWeighted"] = "Weight auctions by stack size",

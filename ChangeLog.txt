@@ -1,3 +1,8 @@
+	Beta 0.4.4 RC5
+- Searchers: Added Category filter to the Resell Searcher
+- Samplers: Added Min. Sample Size option to the Time Sampler - It'll use older auctions if no recent data is available	
+- Updated to RIFT 2.1
+
 	Beta 0.4.4 RC3
 - Updated to RIFT 2.0
 - Raised level cap of Basic & Extended searchers to 60

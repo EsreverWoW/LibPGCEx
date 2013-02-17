@@ -1,0 +1,10 @@
+	Release 0.4.5
+- Searchers: Raised level cap of Basic & Extended searchers to 60
+- Searchers: Added Category filter to the Resell Searcher
+- Samplers: Added Min. Sample Size option to the Time Sampler - It'll use older auctions if no recent data is available	
+- Fallbacks: Added Fixed Price Fallback	
+- Fixed bug in RelativePosition Price Stat
+- Fixed bug in PercentileTrim Price Sampler	
+
+	Release 0.4.4
+- First version

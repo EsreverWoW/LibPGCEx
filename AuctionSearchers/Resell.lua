@@ -82,6 +82,12 @@ local extraDescription =
 		value = "category",
 		defaultValue = DEFAULT_CATEGORY,
 	},
+	rarity =
+	{
+		name = "Rarity",
+		value = "rarity",
+		defaultValue = "sellable",
+	},
 	NativeFixed =
 	{
 		role = nil,
@@ -95,7 +101,7 @@ local extraDescription =
 	NativeMapping =
 	{
 		role = nil,
-		rarity = nil,
+		rarity = "rarity",
 		levelMin = nil,
 		levelMax = nil,
 		category = "category",
@@ -104,9 +110,9 @@ local extraDescription =
 	},
 	Layout =
 	{ 
-		{ "useBuy", "pricingModel", nil, "category", nil, },
-		{ "useBid", "bidDuration", "minDiscount", "minProfit", nil, },
-		columns = 5,		
+		{ "useBuy", "pricingModel", nil, "rarity", nil, "category", nil, },
+		{ "useBid", "bidDuration", nil, "minDiscount", nil, "minProfit", nil, },
+		columns = 7,		
 	},
 	ExtraInfo =
 	{

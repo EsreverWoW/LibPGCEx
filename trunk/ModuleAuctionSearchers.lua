@@ -3,6 +3,7 @@
 -- ***************************************************************************************************************************************************
 -- * Manages "Auction Searcher" modules                                                                                                              *
 -- ***************************************************************************************************************************************************
+-- * 0.4.12/ 2013.09.17 / Baanano: Updated to the new event model                                                                                    *
 -- * 0.4.1 / 2012.08.10 / Baanano: First version                                                                                                     *
 -- ***************************************************************************************************************************************************
 
@@ -12,6 +13,7 @@ _G[addonID] = _G[addonID] or {}
 local PublicInterface = _G[addonID]
 
 local CAScan = Command.Auction.Scan
+local CEAttach = Command.Event.Attach
 local CopyTableRecursive = InternalInterface.Utility.CopyTableRecursive
 local GetAuctionData = LibPGC.GetAuctionData
 local IInteraction = Inspect.Interaction
@@ -103,7 +105,7 @@ function PublicInterface.SearchAuctions(callback, id, online, text, extra)
 		local sortOrder = online.sortOrder or "ascending"
 		if pcall(CAScan, { type = "search", index = index, text = text, rarity = rarity, category = category ~= "" and category or nil, role = role, levelMin = levelMin, levelMax = levelMax, priceMin = priceMin, priceMax = priceMax, sort = sortType, sortOrder = sortOrder }) then
 			nextSearch = 
-				function(criteria, auctionIDs)
+				function(h, criteria, auctionIDs)
 					if criteria ~= "search" then return end
 					
 					online.morePages = #auctionIDs >= 50 and true or false
@@ -125,5 +127,4 @@ function PublicInterface.SearchAuctions(callback, id, online, text, extra)
 	
 	return true
 end
-
-TInsert(Event.LibPGC.AuctionData, { function(...) if type(nextSearch) == "function" then nextSearch(...) end end, addonID, addonID .. ".AuctionSearchers.OnAuctionData" })
+CEAttach(Event.LibPGC.AuctionData, function(...) if type(nextSearch) == "function" then nextSearch(...) end end, addonID .. ".AuctionSearchers.OnAuctionData")

@@ -1,20 +1,14 @@
 -- ***************************************************************************************************************************************************
--- * PriceStats/Average.lua                                                                                                                          *
--- ***************************************************************************************************************************************************
--- * Average price stat                                                                                                                              *
+-- * Average.lua                                                                                                                                     *
 -- ***************************************************************************************************************************************************
 -- * 0.4.1 / 2012.07.24 / Baanano: First version                                                                                                     *
 -- ***************************************************************************************************************************************************
 
-local addonInfo, InternalInterface = ...
-local addonID = addonInfo.identifier
-_G[addonID] = _G[addonID] or {}
-local PublicInterface = _G[addonID]
+local addonDetail, addonData = ...
+local addonID = addonDetail.identifier
+local Internal, Public = addonData.Internal, addonData.Public
 
-local L = InternalInterface.Localization.L
-
-local MCeil = math.ceil
-local pairs = pairs
+local L = Internal.Localization.L
 
 local ID = "avg"
 local NAME = L["Stats/AvgName"]
@@ -35,7 +29,7 @@ local extraDescription =
 	}
 }
 
-local function StatFunction(auctions, extra)
+local function StatFunction(taskHandle, auctions, extra)
 	local weighted = extra and extra.weighted
 	if weighted == nil then weighted = DEFAULT_WEIGHTED end
 
@@ -50,7 +44,8 @@ local function StatFunction(auctions, extra)
 	end	
 
 	if totalWeight <= 0 then return nil end
-	return MCeil(totalPrice / totalWeight)
+	
+	return math.ceil(totalPrice / totalWeight)
 end
 
-PublicInterface.RegisterPriceStat(ID, NAME, StatFunction, extraDescription)
+Public.Price.Stat.Register(ID, { name = NAME, execute = StatFunction, definition = extraDescription })

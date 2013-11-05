@@ -1,23 +1,15 @@
 -- ***************************************************************************************************************************************************
--- * PricingModels/Vendor.lua                                                                                                                        *
--- ***************************************************************************************************************************************************
--- * Vendor price fallback                                                                                                                           *
+-- * Vendor.lua                                                                                                                                      *
 -- ***************************************************************************************************************************************************
 -- * 0.4.1 / 2012.07.24 / Baanano: Rewritten for LibPGCEx                                                                                            *
 -- * 0.4.0 / 2012.06.17 / Baanano: Rewritten for 1.9                                                                                                 *
 -- ***************************************************************************************************************************************************
 
-local addonInfo, InternalInterface = ...
-local addonID = addonInfo.identifier
-_G[addonID] = _G[addonID] or {}
-local PublicInterface = _G[addonID]
+local addonDetail, addonData = ...
+local addonID = addonDetail.identifier
+local Internal, Public = addonData.Internal, addonData.Public
 
-local L = InternalInterface.Localization.L
-
-local IIDetail = Inspect.Item.Detail
-local MFloor = math.floor
-local MMin = math.min
-local pcall = pcall
+local L = Internal.Localization.L
 
 local ID = "vendor"
 local NAME = L["Fallbacks/VendorName"]
@@ -52,18 +44,18 @@ local extraDescription =
 	}
 }
 
-local function PriceFunction(item, extra)
-	local ok, itemDetail = pcall(IIDetail, item)
+local function PriceFunction(taskHandle, item, extra)
+	local ok, itemDetail = pcall(Inspect.Item.Detail, item)
 	
 	local bidMultiplier = extra and extra.bidMultiplier or DEFAULT_BID_MULTIPLIER
 	local buyMultiplier = extra and extra.buyMultiplier or DEFAULT_BUY_MULTIPLIER
 	local sellPrice = ok and itemDetail and itemDetail.sell or DEFAULT_SELL_PRICE
 	
-	local bid = MFloor(sellPrice * bidMultiplier)
-	local buy = MFloor(sellPrice * buyMultiplier)
-	bid = MMin(bid, buy)
+	local bid = math.floor(sellPrice * bidMultiplier)
+	local buy = math.floor(sellPrice * buyMultiplier)
+	bid = math.min(bid, buy)
 	
 	return bid, buy
 end
 
-PublicInterface.RegisterPriceFallback(ID, NAME, PriceFunction, extraDescription)
+Public.Price.Fallback.Register(ID, { name = NAME, execute = PriceFunction, definition = extraDescription })

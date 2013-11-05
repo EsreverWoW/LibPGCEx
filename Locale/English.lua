@@ -1,6 +1,8 @@
-﻿local _, InternalInterface = ...
+﻿local addonDetail, addonData = ...
+local addonID = addonDetail.identifier
+local Internal, Public = addonData.Internal, addonData.Public
 
-InternalInterface.Localization.RegisterLocale("English",--@do-not-package@
+Internal.Localization.Register("English",--@do-not-package@
 {
 	-- Searchers
 	["Searchers/BasicName"] = "Basic",

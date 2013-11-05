@@ -1,19 +1,14 @@
 -- ***************************************************************************************************************************************************
--- * PricingModels/Fixed.lua                                                                                                                         *
--- ***************************************************************************************************************************************************
--- * Fixed price fallback                                                                                                                            *
+-- * Fixed.lua                                                                                                                                       *
 -- ***************************************************************************************************************************************************
 -- * 0.4.1 / 2012.10.27 / Baanano: First version                                                                                                     *
 -- ***************************************************************************************************************************************************
 
-local addonInfo, InternalInterface = ...
-local addonID = addonInfo.identifier
-_G[addonID] = _G[addonID] or {}
-local PublicInterface = _G[addonID]
+local addonDetail, addonData = ...
+local addonID = addonDetail.identifier
+local Internal, Public = addonData.Internal, addonData.Public
 
-local L = InternalInterface.Localization.L
-
-local MMin = math.min
+local L = Internal.Localization.L
 
 local ID = "fixed"
 local NAME = L["Fallbacks/FixedName"]
@@ -41,13 +36,13 @@ local extraDescription =
 	}
 }
 
-local function PriceFunction(item, extra)
+local function PriceFunction(taskHandle, item, extra)
 	local bid = extra and extra.bidPrice or DEFAULT_PRICE
 	local buy = extra and extra.buyPrice or DEFAULT_PRICE
 
-	bid = MMin(bid, buy)
+	bid = math.min(bid, buy)
 	
 	return bid, buy
 end
 
-PublicInterface.RegisterPriceFallback(ID, NAME, PriceFunction, extraDescription)
+Public.Price.Fallback.Register(ID, { name = NAME, execute = PriceFunction, definition = extraDescription })

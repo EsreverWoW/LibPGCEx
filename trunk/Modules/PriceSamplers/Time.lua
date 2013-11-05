@@ -1,21 +1,14 @@
 -- ***************************************************************************************************************************************************
--- * PriceSamplers/Time.lua                                                                                                                          *
--- ***************************************************************************************************************************************************
--- * Time price sampler                                                                                                                              *
+-- * Time.lua                                                                                                                                        *
 -- ***************************************************************************************************************************************************
 -- * 0.4.1 / 2012.07.25 / Baanano: First version                                                                                                     *
 -- ***************************************************************************************************************************************************
 
-local addonInfo, InternalInterface = ...
-local addonID = addonInfo.identifier
-_G[addonID] = _G[addonID] or {}
-local PublicInterface = _G[addonID]
+local addonDetail, addonData = ...
+local addonID = addonDetail.identifier
+local Internal, Public = addonData.Internal, addonData.Public
 
-local L = InternalInterface.Localization.L
-
-local TInsert = table.insert
-local TSort = table.sort
-local pairs = pairs
+local L = Internal.Localization.L
 
 local ID = "time"
 local NAME = L["Samplers/TimeName"]
@@ -51,7 +44,7 @@ local extraDescription =
 	}
 }
 
-local function SampleFunction(auctions, startTime, extra)
+local function SampleFunction(taskHandle, auctions, startTime, extra)
 	local days = extra and extra.days or DEFAULT_DAYS
 	local minSample = extra and extra.minSample or DEFAULT_MINSAMPLE
 
@@ -62,18 +55,18 @@ local function SampleFunction(auctions, startTime, extra)
 	
 	local numAuctions = 0
 	for auctionID, auctionData in pairs(auctions) do
-		if (timeLimit and auctionData.lastSeenTime >= timeLimit) or (not timeLimit and auctionData.active) then
+		if auctionData.active or (timeLimit and auctionData.firstUnseenTime >= timeLimit) then
 			filteredAuctions[auctionID] = auctionData
 			numAuctions = numAuctions + 1
 		else
-			TInsert(excludedAuctions, auctionID)
+			excludedAuctions[#excludedAuctions + 1] = auctionID
 		end
 	end
 	
 	if numAuctions < minSample then
-		TSort(excludedAuctions, function(a, b)
-			local lastSeenA = auctions[a].lastSeenTime
-			local lastSeenB = auctions[b].lastSeenTime
+		table.sort(excludedAuctions, function(a, b)
+			local lastSeenA = auctions[a].firstUnseenTime > 0 and auctions[a].firstUnseenTime or math.huge
+			local lastSeenB = auctions[b].firstUnseenTime > 0 and auctions[b].firstUnseenTime or math.huge
 			if lastSeenA == lastSeenB then
 				return b > a
 			end
@@ -93,4 +86,4 @@ local function SampleFunction(auctions, startTime, extra)
 	return filteredAuctions
 end
 
-PublicInterface.RegisterPriceSampler(ID, NAME, SampleFunction, extraDescription)
+Public.Price.Sampler.Register(ID, { name = NAME, execute = SampleFunction, definition = extraDescription })

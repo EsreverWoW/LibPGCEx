@@ -1,19 +1,14 @@
 -- ***************************************************************************************************************************************************
--- * PriceSamplers/StandardDeviation.lua                                                                                                             *
--- ***************************************************************************************************************************************************
--- * Standard Deviation price sampler                                                                                                                *
+-- * StandardDeviation.lua                                                                                                                           *
 -- ***************************************************************************************************************************************************
 -- * 0.4.1 / 2012.07.24 / Baanano: First version                                                                                                     *
 -- ***************************************************************************************************************************************************
 
-local addonInfo, InternalInterface = ...
-local addonID = addonInfo.identifier
-_G[addonID] = _G[addonID] or {}
-local PublicInterface = _G[addonID]
+local addonDetail, addonData = ...
+local addonID = addonDetail.identifier
+local Internal, Public = addonData.Internal, addonData.Public
 
-local L = InternalInterface.Localization.L
-
-local pairs = pairs
+local L = Internal.Localization.L
 
 local ID = "stdev"
 local NAME = L["Samplers/StdevName"]
@@ -55,7 +50,7 @@ local extraDescription =
 	}
 }
 
-local function SampleFunction(auctions, startTime, extra)
+local function SampleFunction(taskHandle, auctions, startTime, extra)
 	local weighted = extra and extra.weighted
 	if weighted == nil then weighted = DEFAULT_WEIGHTED end
 	local lowDeviation = (extra and extra.lowDeviation or DEFAULT_LOW_DEVIATION) / 10
@@ -88,4 +83,4 @@ local function SampleFunction(auctions, startTime, extra)
 	return filteredAuctions
 end
 
-PublicInterface.RegisterPriceSampler(ID, NAME, SampleFunction, extraDescription)
+Public.Price.Sampler.Register(ID, { name = NAME, execute = SampleFunction, definition = extraDescription })

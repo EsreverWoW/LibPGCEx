@@ -1,23 +1,14 @@
 -- ***************************************************************************************************************************************************
--- * PriceSamplers/PercentileTrim.lua                                                                                                                *
--- ***************************************************************************************************************************************************
--- * Percentile Trim price sampler                                                                                                                    *
+-- * PercentileTrim.lua                                                                                                                              *
 -- ***************************************************************************************************************************************************
 -- * 0.4.1 / 2012.07.24 / Baanano: First version                                                                                                     *
 -- ***************************************************************************************************************************************************
 
-local addonInfo, InternalInterface = ...
-local addonID = addonInfo.identifier
-_G[addonID] = _G[addonID] or {}
-local PublicInterface = _G[addonID]
+local addonDetail, addonData = ...
+local addonID = addonDetail.identifier
+local Internal, Public = addonData.Internal, addonData.Public
 
-local L = InternalInterface.Localization.L
-
-local MCeil = math.ceil
-local MFloor = math.floor
-local TInsert = table.insert
-local TSort = table.sort
-local pairs = pairs
+local L = Internal.Localization.L
 
 local ID = "ptrim"
 local NAME = L["Samplers/PtrimName"]
@@ -58,7 +49,7 @@ local extraDescription =
 	}
 }
 
-local function SampleFunction(auctions, startTime, extra)
+local function SampleFunction(taskHandle, auctions, startTime, extra)
 	local weighted = extra and extra.weighted
 	if weighted == nil then weighted = DEFAULT_WEIGHTED end
 	local lowTrim = extra and extra.lowTrim or DEFAULT_LOW_TRIM
@@ -72,13 +63,13 @@ local function SampleFunction(auctions, startTime, extra)
 		local weight = weighted and auctionData.stack or 1
 		
 		for i = 1, weight do
-			TInsert(priceOrder, auctionID)
+			priceOrder[#priceOrder + 1] = auctionID
 		end
 	end
 	
-	TSort(priceOrder, function(a, b) return auctions[a].buyoutUnitPrice < auctions[b].buyoutUnitPrice end)
+	table.sort(priceOrder, function(a, b) return auctions[a].buyoutUnitPrice < auctions[b].buyoutUnitPrice end)
 	
-	local firstIndex, lastIndex = MFloor(lowTrim * #priceOrder / 100) + 1, MCeil(highTrim * #priceOrder / 100)
+	local firstIndex, lastIndex = math.floor(lowTrim * #priceOrder / 100) + 1, math.ceil(highTrim * #priceOrder / 100)
 	
 	local filteredAuctions = {}
 	
@@ -92,4 +83,4 @@ local function SampleFunction(auctions, startTime, extra)
 	return filteredAuctions
 end
 
-PublicInterface.RegisterPriceSampler(ID, NAME, SampleFunction, extraDescription)
+Public.Price.Sampler.Register(ID, { name = NAME, execute = SampleFunction, definition = extraDescription })

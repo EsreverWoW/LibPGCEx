@@ -4,3 +4,5 @@ enable-nolib-creation: no
 externals:
     LibPGC:
         url: svn://svn.curseforge.net/rift/libpgc/mainline/trunk
+	LibPGC/blTasks:
+		url: svn://svn.curseforge.net/rift/bltasks/mainline/trunk

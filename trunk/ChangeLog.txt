@@ -1,3 +1,8 @@
+	Alpha 0.5.0 r17
+- Modified public interface: *this version isn't backwards compatible*
+- Switched scheduler library to blTasks, price queries now return abortable tasks
+- Temporarily disabled extended search queries
+
 	Release 0.4.12
 - Updated to the new event model
 

@@ -158,8 +158,7 @@ function Public.Price.Calculate(item, chains, bidPercentage, dontMatch)
 					end
 				end
 				
-				-- 5.3.5. Wait until all tasks finish and collect their results
-				taskHandle:Wait(blTasks.Wait.Children())
+				-- 5.3.5. Collect tasks results
 				for priceID, priceTask in pairs(priceTasks) do
 					local ok, bid, buy = pcall(priceTask.Result, priceTask)
 					if ok then
@@ -169,6 +168,7 @@ function Public.Price.Calculate(item, chains, bidPercentage, dontMatch)
 							prices[priceID] = { bid = math.max(math.floor(bid * bidPercentage), 1), buy = bid, }
 						end
 					end
+					priceTasks[priceID] = nil
 				end
 			end
 			

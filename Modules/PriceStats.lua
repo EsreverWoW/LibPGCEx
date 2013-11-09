@@ -40,7 +40,7 @@ function Public.Price.Stat.Unregister(id)
 end
 
 function Public.Price.Stat.Get(id)
-	return priceStats[id] and blUtil.Copy.Deep(priceStats[id].definition) or nil, priceStats[id] and priceStats[id].addon or nil
+	return id and priceStats[id] and blUtil.Copy.Deep(priceStats[id].definition) or nil, priceStats[id] and priceStats[id].addon or nil
 end
 
 function Public.Price.Stat.List()

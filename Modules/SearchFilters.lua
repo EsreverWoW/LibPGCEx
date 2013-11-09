@@ -41,7 +41,7 @@ function Public.Search.Filter.Unregister(id)
 end
 
 function Public.Search.Filter.Get(id)
-	return searchFilters[id] and blUtil.Copy.Deep(searchFilters[id].definition) or nil, searchFilters[id] and searchFilters[id].addon or nil
+	return id and searchFilters[id] and blUtil.Copy.Deep(searchFilters[id].definition) or nil, searchFilters[id] and searchFilters[id].addon or nil
 end
 
 function Public.Search.Filter.List()

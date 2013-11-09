@@ -40,7 +40,7 @@ function Public.Price.External.Unregister(id)
 end
 
 function Public.Price.External.Get(id)
-	return priceExternals[id] and blUtil.Copy.Deep(priceExternals[id].definition) or nil, priceExternals[id] and priceExternals[id].addon or nil
+	return id and priceExternals[id] and blUtil.Copy.Deep(priceExternals[id].definition) or nil, priceExternals[id] and priceExternals[id].addon or nil
 end
 
 function Public.Price.External.List()

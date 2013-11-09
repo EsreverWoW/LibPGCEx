@@ -40,7 +40,7 @@ function Public.Price.Fallback.Unregister(id)
 end
 
 function Public.Price.Fallback.Get(id)
-	return priceFallbacks[id] and blUtil.Copy.Deep(priceFallbacks[id].definition) or nil, priceFallbacks[id] and priceFallbacks[id].addon or nil
+	return id and priceFallbacks[id] and blUtil.Copy.Deep(priceFallbacks[id].definition) or nil, priceFallbacks[id] and priceFallbacks[id].addon or nil
 end
 
 function Public.Price.Fallback.List()

@@ -40,7 +40,7 @@ function Public.Price.Unregister(id)
 end
 
 function Public.Price.Get(id)
-	return priceChains[id] and blUtil.Copy.Deep(priceChains[id].definition) or nil, priceChains[id] and priceChains[id].addon or nil
+	return id and priceChains[id] and blUtil.Copy.Deep(priceChains[id].definition) or nil, priceChains[id] and priceChains[id].addon or nil
 end
 
 function Public.Price.List()

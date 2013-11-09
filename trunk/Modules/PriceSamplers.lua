@@ -40,7 +40,7 @@ function Public.Price.Sampler.Unregister(id)
 end
 
 function Public.Price.Sampler.Get(id)
-	return priceSamplers[id] and blUtil.Copy.Deep(priceSamplers[id].definition) or nil, priceSamplers[id] and priceSamplers[id].addon or nil
+	return id and priceSamplers[id] and blUtil.Copy.Deep(priceSamplers[id].definition) or nil, priceSamplers[id] and priceSamplers[id].addon or nil
 end
 
 function Public.Price.Sampler.List()

@@ -1,0 +1,3 @@
+[submodule "LibPGC"]
+	path = LibPGC
+	url = https://github.com/EsreverWoW/LibPGC

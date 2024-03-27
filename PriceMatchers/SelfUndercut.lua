@@ -1,14 +1,22 @@
 -- ***************************************************************************************************************************************************
--- * SelfUndercut.lua                                                                                                                                *
+-- * PriceMatchers/SelfUndercut.lua                                                                                                                  *
+-- ***************************************************************************************************************************************************
+-- * Self matcher & Competition Undercut matcher                                                                                                     *
 -- ***************************************************************************************************************************************************
 -- * 0.4.1 / 2012.07.29 / Baanano: First version                                                                                                     *
 -- ***************************************************************************************************************************************************
 
-local addonDetail, addonData = ...
-local addonID = addonDetail.identifier
-local Internal, Public = addonData.Internal, addonData.Public
+local addonInfo, InternalInterface = ...
+local addonID = addonInfo.identifier
+_G[addonID] = _G[addonID] or {}
+local PublicInterface = _G[addonID]
 
-local L = Internal.Localization.L
+local L = InternalInterface.Localization.L
+
+local MCeil = math.ceil
+local MFloor = math.floor
+local MMax = math.max
+local pairs = pairs
 
 local ID = "selfundercut"
 local NAME = L["Matchers/SelfundercutName"]
@@ -77,7 +85,7 @@ local extraDescription =
 	},
 }
 
-local function MatchFunction(taskHandle, item, originalBid, originalBuy, adjustedBid, adjustedBuy, auctions, extra)
+local function MatchFunction(item, originalBid, originalBuy, adjustedBid, adjustedBuy, auctions, extra)
 	local selfRange = extra and extra.selfRange or DEFAULT_SELF_RANGE
 	local undercutRange = extra and extra.undercutRange or DEFAULT_UNDERCUT_RANGE
 	local undercutRelative = extra and extra.undercutRelative or DEFAULT_UNDERCUT_RELATIVE
@@ -85,15 +93,15 @@ local function MatchFunction(taskHandle, item, originalBid, originalBuy, adjuste
 	local noCompetitionRelative = extra and extra.noCompetitionRelative or DEFAULT_NOCOMPETITION_RELATIVE
 	local noCompetitionAbsolute = extra and extra.noCompetitionAbsolute or DEFAULT_NOCOMPETITION_ABSOLUTE
 
-	local ownBidLow = math.floor(adjustedBid - selfRange * adjustedBid / 100)
-	local ownBidHigh = math.ceil(adjustedBid + selfRange * adjustedBid / 100)
-	local ownBuyLow = math.floor(adjustedBuy - selfRange * adjustedBuy / 100)
-	local ownBuyHigh = math.ceil(adjustedBuy + selfRange * adjustedBuy / 100)
+	local ownBidLow = MFloor(adjustedBid - selfRange * adjustedBid / 100)
+	local ownBidHigh = MCeil(adjustedBid + selfRange * adjustedBid / 100)
+	local ownBuyLow = MFloor(adjustedBuy - selfRange * adjustedBuy / 100)
+	local ownBuyHigh = MCeil(adjustedBuy + selfRange * adjustedBuy / 100)
 
-	local undercutBidLow = math.floor(adjustedBid - undercutRange * adjustedBid / 100)
-	local undercutBidHigh = math.ceil(adjustedBid + undercutRange * adjustedBid / 100)
-	local undercutBuyLow = math.floor(adjustedBuy - undercutRange * adjustedBuy / 100)
-	local undercutBuyHigh = math.ceil(adjustedBuy + undercutRange * adjustedBuy / 100)
+	local undercutBidLow = MFloor(adjustedBid - undercutRange * adjustedBid / 100)
+	local undercutBidHigh = MCeil(adjustedBid + undercutRange * adjustedBid / 100)
+	local undercutBuyLow = MFloor(adjustedBuy - undercutRange * adjustedBuy / 100)
+	local undercutBuyHigh = MCeil(adjustedBuy + undercutRange * adjustedBuy / 100)
 	
 	local selfBid, selfBuy = nil, nil
 	local undercutBid, undercutBuy = nil, nil
@@ -117,8 +125,8 @@ local function MatchFunction(taskHandle, item, originalBid, originalBuy, adjuste
 		end
 	end
 	
-	undercutBid = undercutBid and math.floor(undercutBid - undercutBid * undercutRelative / 100 - undercutAbsolute) or nil
-	undercutBuy = undercutBuy and math.floor(undercutBuy - undercutBuy * undercutRelative / 100 - undercutAbsolute) or nil
+	undercutBid = undercutBid and MFloor(undercutBid - undercutBid * undercutRelative / 100 - undercutAbsolute) or nil
+	undercutBuy = undercutBuy and MFloor(undercutBuy - undercutBuy * undercutRelative / 100 - undercutAbsolute) or nil
 
 	if selfBid or selfBuy then
 		adjustedBid = selfBid or adjustedBid
@@ -127,14 +135,14 @@ local function MatchFunction(taskHandle, item, originalBid, originalBuy, adjuste
 		adjustedBid = undercutBid or adjustedBid
 		adjustedBuy = undercutBuy or adjustedBuy
 	else
-		adjustedBid = math.floor(adjustedBid + adjustedBid * noCompetitionRelative / 100 + noCompetitionAbsolute)
-		adjustedBuy = math.floor(adjustedBuy + adjustedBuy * noCompetitionRelative / 100 + noCompetitionAbsolute)
+		adjustedBid = MFloor(adjustedBid + adjustedBid * noCompetitionRelative / 100 + noCompetitionAbsolute)
+		adjustedBuy = MFloor(adjustedBuy + adjustedBuy * noCompetitionRelative / 100 + noCompetitionAbsolute)
 	end
 	
-	adjustedBid = math.max(1, adjustedBid)
-	adjustedBuy = math.max(1, adjustedBuy)
+	adjustedBid = MMax(1, adjustedBid)
+	adjustedBuy = MMax(1, adjustedBuy)
 	
 	return adjustedBid, adjustedBuy
 end
 
-Public.Price.Matcher.Register(ID, { name = NAME, execute = MatchFunction, definition = extraDescription })
+PublicInterface.RegisterPriceMatcher(ID, NAME, MatchFunction, extraDescription)

@@ -1,14 +1,22 @@
 -- ***************************************************************************************************************************************************
--- * MinProfit.lua                                                                                                                                   *
+-- * PriceMatchers/MinProfit.lua                                                                                                                     *
+-- ***************************************************************************************************************************************************
+-- * Minimum profit matcher                                                                                                                          *
 -- ***************************************************************************************************************************************************
 -- * 0.4.1 / 2012.07.29 / Baanano: First version                                                                                                     *
 -- ***************************************************************************************************************************************************
 
-local addonDetail, addonData = ...
-local addonID = addonDetail.identifier
-local Internal, Public = addonData.Internal, addonData.Public
+local addonInfo, InternalInterface = ...
+local addonID = addonInfo.identifier
+_G[addonID] = _G[addonID] or {}
+local PublicInterface = _G[addonID]
 
-local L = Internal.Localization.L
+local L = InternalInterface.Localization.L
+
+local IIDetail = Inspect.Item.Detail
+local MCeil = math.ceil
+local MMax = math.max
+local pcall = pcall
 
 local ID = "minprofit"
 local NAME = L["Matchers/MinprofitName"]
@@ -31,17 +39,17 @@ local extraDescription =
 	},
 }
 
-local function MatchFunction(taskHandle, item, originalBid, originalBuy, adjustedBid, adjustedBuy, auctions, extra)
+local function MatchFunction(item, originalBid, originalBuy, adjustedBid, adjustedBuy, auctions, extra)
 	local minProfit = extra and extra.minProfit or DEFAULT_MIN_PROFIT
-	local ok, itemDetail = pcall(Inspect.Item.Detail, item)
+	local ok, itemDetail = pcall(IIDetail, item)
 	
 	local sellPrice = ok and itemDetail and itemDetail.sell or DEFAULT_SELL_PRICE
-	sellPrice = math.ceil((sellPrice + minProfit) / AH_FEE_MULTIPLIER)
+	sellPrice = MCeil((sellPrice + minProfit) / AH_FEE_MULTIPLIER)
 	
-	adjustedBid = math.max(sellPrice, adjustedBid)
-	adjustedBuy = math.max(sellPrice, adjustedBuy)
+	adjustedBid = MMax(sellPrice, adjustedBid)
+	adjustedBuy = MMax(sellPrice, adjustedBuy)
 	
 	return adjustedBid, adjustedBuy
 end
 
-Public.Price.Matcher.Register(ID, { name = NAME, execute = MatchFunction, definition = extraDescription })
+PublicInterface.RegisterPriceMatcher(ID, NAME, MatchFunction, extraDescription)

@@ -20,7 +20,7 @@ local DEFAULT_CALLING = nil
 local DEFAULT_RARITY = "sellable"
 local DEFAULT_CATEGORY = ""
 local MIN_LEVEL = 0
-local MAX_LEVEL = 60
+local MAX_LEVEL = 70
 
 local extraDescription =
 {

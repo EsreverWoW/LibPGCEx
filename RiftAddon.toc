@@ -11,7 +11,7 @@ Description =
 	English = "LibPGCEx allows to register modules that extend LibPGC functionality.",
 }
 Author = "Baanano"
-Version = "0.5.0 r19"
+Version = "0.5.0 r17"
 Email = "baanano.rift@gmail.com"
 Environment = "2.4"
 Embed =
@@ -35,9 +35,6 @@ RunOnStartup =
 	"Locale/Korean.lua",
 	"Locale/Russian.lua",
 	"Modules/SearchFilters.lua",
-	"Modules/SearchFilters/Basic.lua",
-	"Modules/SearchFilters/Extended.lua",
-	"Modules/SearchFilters/Vendor.lua",
 	"Modules/PriceFallbacks.lua",
 	"Modules/PriceFallbacks/Fixed.lua",
 	"Modules/PriceFallbacks/Vendor.lua",
@@ -53,7 +50,6 @@ RunOnStartup =
 	"Modules/PriceMatchers/SelfUndercut.lua",
 	"Modules/PriceMatchers/MinProfit.lua",	
 	"Modules/PriceChains.lua",
-	"Search.lua",
 	"Price.lua",
 	"Epilog.lua",
 }

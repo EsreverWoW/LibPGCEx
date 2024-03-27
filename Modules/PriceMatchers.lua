@@ -40,7 +40,7 @@ function Public.Price.Matcher.Unregister(id)
 end
 
 function Public.Price.Matcher.Get(id)
-	return id and priceMatchers[id] and blUtil.Copy.Deep(priceMatchers[id].definition) or nil, priceMatchers[id] and priceMatchers[id].addon or nil
+	return priceMatchers[id] and blUtil.Copy.Deep(priceMatchers[id].definition) or nil, priceMatchers[id] and priceMatchers[id].addon or nil
 end
 
 function Public.Price.Matcher.List()

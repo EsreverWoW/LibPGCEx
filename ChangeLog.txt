@@ -1,7 +1,4 @@
-	Alpha 0.5.0 r19
-- Reenabled search queries, except the Resell searcher
-
-	Alpha 0.5.0 r18
+	Alpha 0.5.0 r17
 - Modified public interface: *this version isn't backwards compatible*
 - Switched scheduler library to blTasks, price queries now return abortable tasks
 - Temporarily disabled extended search queries
